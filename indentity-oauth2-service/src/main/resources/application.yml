@@ -1,0 +1,25 @@
+api:
+  prefix: /api/v1
+app:
+  jwt:
+    secretKey: B1PtOxdWYsCuZ7fon6wMuUWwsGtLouYyUl4LVScBNiKSKWIHt+fSWKq9sxEPc8ts+8ey1o/qdy5oMs1qYgq0hQ==
+  allowed:
+    origins: ${ALLOWED_ORIGINS}
+server:
+  port: ${SERVER_PORT}
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: ${MYSQL_SQL_PASSWORD}
+    url: jdbc:mysql://${MYSQL_SQL_HOST}:${MYSQL_SQL_PORT}/${MYSQL_SQL_DB}
+    username: ${MYSQL_SQL_USERNAME}
+  jpa:
+    generate-ddl: false
+    show-sql: true
+
+springdoc:
+  swagger-ui:
+    filter: true
+
