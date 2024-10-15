@@ -6,10 +6,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients
-public class IndentityOauth2Application {
+public class IdentityOauth2Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IndentityOauth2Application.class, args);
+		SpringApplication.run(IdentityOauth2Application.class, args);
 	}
 
 }

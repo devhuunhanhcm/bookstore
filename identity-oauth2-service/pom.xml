@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com</groupId>
-	<artifactId>indentity-oauth2</artifactId>
+	<artifactId>identity-oauth2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>indentity-oauth2</name>
-	<description>indentity service using oauth2</description>
+	<name>identity-oauth2</name>
+	<description>identity service using oauth2</description>
 	<url/>
 	<licenses>
 		<license/>

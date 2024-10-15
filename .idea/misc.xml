@@ -6,6 +6,8 @@
       <list>
         <option value="$PROJECT_DIR$/indentity-oauth2-service/pom.xml" />
         <option value="$PROJECT_DIR$/profile-service/pom.xml" />
+        <option value="$PROJECT_DIR$/api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/identity-oauth2-service/pom.xml" />
       </list>
     </option>
   </component>
