@@ -1,5 +1,7 @@
 api:
   prefix: /api/v1
+  service:
+    profile: ${PROFILE_SERVICE}
 app:
   jwt:
     secretKey: B1PtOxdWYsCuZ7fon6wMuUWwsGtLouYyUl4LVScBNiKSKWIHt+fSWKq9sxEPc8ts+8ey1o/qdy5oMs1qYgq0hQ==
@@ -16,7 +18,8 @@ spring:
     url: jdbc:mysql://${MYSQL_SQL_HOST}:${MYSQL_SQL_PORT}/${MYSQL_SQL_DB}
     username: ${MYSQL_SQL_USERNAME}
   jpa:
-    generate-ddl: false
+    hibernate:
+      ddl-auto: update
     show-sql: true
 
 springdoc:

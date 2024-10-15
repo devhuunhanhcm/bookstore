@@ -12,9 +12,6 @@ import lombok.experimental.SuperBuilder;
 public class CUserDTO {
     private String id;
     private String username;
-    private String displayName;
     private String email;
-    private String avatar;
-    private String phone;
     private boolean isActive;
 }

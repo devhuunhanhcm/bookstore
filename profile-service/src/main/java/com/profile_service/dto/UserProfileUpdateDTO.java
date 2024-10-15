@@ -1,5 +1,7 @@
-package com.indentity_oauth2.user.dto;
+package com.profile_service.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,8 +10,14 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
-public class CUserDetailsUpdateDTO {
+public class UserProfileUpdateDTO {
+    private String id;
+    private String userId;
+    @NotBlank
+    private String username;
+    @NotBlank
     private String displayName;
     private String email;
     private String avatar;

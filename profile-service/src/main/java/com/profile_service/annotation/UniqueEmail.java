@@ -1,5 +1,4 @@
-package com.indentity_oauth2.security.annotation;
-
+package com.profile_service.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -9,11 +8,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = UniquePhoneValidator.class)
+@Constraint(validatedBy = UniqueEmailValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface  UniquePhone {
-    String message() default "Phone number is existed.";
+public @interface UniqueEmail {
+    String message() default "Email is existed.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

@@ -9,7 +9,11 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @NoArgsConstructor
 @SuperBuilder
-public class CUserDetailsAndTokenDTO {
-    private CUserDetailsDTO userDetailsDTO;
-    private String token;
+public class UserProfileDTO {
+    private String userId;
+    private String username;
+    private String displayName;
+    private String email;
+    private String avatar;
+    private String phone;
 }

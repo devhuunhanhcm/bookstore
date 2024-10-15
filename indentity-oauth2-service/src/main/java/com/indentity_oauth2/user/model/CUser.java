@@ -29,26 +29,8 @@ public class CUser extends BaseEntity {
     @Column(name = "password",nullable = false)
     private String password;
 
-    @Column(name = "display_name",nullable = false)
-    private String displayName;
-
     @Column(name = "email",nullable = false,unique = true,length = 255)
     private String email;
-
-    @Column(name = "avatar")
-    private String avatar;
-
-    @Column(name="address")
-    private String address;
-
-    @Column(name = "phone",length = 11)
-    private String phone;
-
-    @Column(name="gg_id")
-    private String ggId;
-
-    @Column(name="fb_id")
-    private String fbId;
 
     @Column(name = "is_active",columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean isActive = true;
