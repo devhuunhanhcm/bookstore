@@ -8,8 +8,9 @@ import com.indentity_oauth2.security.dto.RegisterDTO;
 import com.indentity_oauth2.security.jwt.JwtHelper;
 import com.indentity_oauth2.security.model.RefreshToken;
 import com.indentity_oauth2.security.repository.RefreshTokenRepository;
-import com.indentity_oauth2.user.dto.CUserDetailsAndTokenDTO;
-import com.indentity_oauth2.user.dto.CUserDetailsDTO;
+import com.indentity_oauth2.user.dto.TokenDTO;
+import com.indentity_oauth2.user.dto.UserProfileDTO;
+import com.indentity_oauth2.user.feignclient.UserProfileFeignClient;
 import com.indentity_oauth2.user.mapper.CUserMapper;
 import com.indentity_oauth2.user.model.CUser;
 import com.indentity_oauth2.user.repository.CUserRepository;
@@ -49,8 +50,11 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private JwtHelper jwtHelper;
 
+    @Autowired
+    private UserProfileFeignClient  userProfileFeignClient;
+
     @Override
-    public CUserDetailsAndTokenDTO login(LoginDTO dto, HttpServletResponse response) {
+    public TokenDTO login(LoginDTO dto, HttpServletResponse response) {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword());
         Authentication auth;
         try{
@@ -69,10 +73,9 @@ public class AuthServiceImpl implements AuthService {
         if(userOpt.isEmpty())
             return null;
         CUser user = userOpt.get();
-        CUserDetailsDTO userDetailsDTO =  CUserMapper.INSTANCE.toUserDetailsDTO(user);
 
         //Set Refresh token for client
-        String refreshTokenString = jwtHelper.generateRefreshTokenWithUsernameAndRoles(userDetailsDTO.getUsername(),authorities);
+        String refreshTokenString = jwtHelper.generateRefreshTokenWithUsernameAndRoles(user.getUsername(),authorities);
         RefreshToken refreshTokenEntity = RefreshToken.builder().refreshToken(refreshTokenString).user(user).build();
         refreshTokenRepository.save(refreshTokenEntity);
 
@@ -86,7 +89,7 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        return CUserDetailsAndTokenDTO.builder().userDetailsDTO(userDetailsDTO).token(token).build();
+        return TokenDTO.builder().token(token).build();
     }
 
     @Override
@@ -102,10 +105,14 @@ public class AuthServiceImpl implements AuthService {
                     .username(dto.getUsername())
                     .password(passwordEncoder.encode(dto.getPassword()))
                     .email(dto.getEmail())
+                    .isActive(true)
                     .roles(roles)
-                    .displayName(dto.getUsername())
                     .build();
-            userRepository.save(user);
+            user = userRepository.save(user);
+            UserProfileDTO userProfileDTO = CUserMapper.INSTANCE.toUserProfileDTO(user);
+            userProfileDTO.setUserId(user.getId());
+            Object res = userProfileFeignClient.createProfile(userProfileDTO);
+
         } catch (Exception e) {
             throw new RuntimeException("Something wrong please try again");
         }

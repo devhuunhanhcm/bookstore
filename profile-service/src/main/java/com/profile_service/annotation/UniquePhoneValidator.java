@@ -1,18 +1,18 @@
-package com.indentity_oauth2.security.annotation;
+package com.profile_service.annotation;
 
-import com.indentity_oauth2.user.model.CUser;
-import com.indentity_oauth2.user.repository.CUserRepository;
+import com.profile_service.model.UserProfile;
+import com.profile_service.repository.UserProfileRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 public class UniquePhoneValidator implements ConstraintValidator<UniquePhone, String> {
     private String message;
-
-    @Autowired
-    private CUserRepository repository;
+    private final UserProfileRepository userProfileRepository;
 
     @Override
     public void initialize(UniquePhone uniqueUsername) {
@@ -21,7 +21,7 @@ public class UniquePhoneValidator implements ConstraintValidator<UniquePhone, St
 
     @Override
     public boolean isValid(String phone, ConstraintValidatorContext context) {
-        Optional<CUser> userOpt = repository.findByPhone(phone);
+        Optional<UserProfile> userOpt = userProfileRepository.findByPhone(phone);
         if(userOpt.isEmpty())
             return true;
 

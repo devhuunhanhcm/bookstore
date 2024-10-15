@@ -5,7 +5,7 @@ import com.indentity_oauth2.security.dto.LoginDTO;
 import com.indentity_oauth2.security.dto.RegisterDTO;
 import com.indentity_oauth2.security.service.AuthService;
 import com.indentity_oauth2.security.service.RefreshTokenService;
-import com.indentity_oauth2.user.dto.CUserDetailsAndTokenDTO;
+import com.indentity_oauth2.user.dto.TokenDTO;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,7 +28,7 @@ public class AuthController {
     public Object login(@Valid @RequestBody LoginDTO loginDTO, BindingResult bindingResult, HttpServletResponse response) {
         if(bindingResult.hasErrors())
             return ResponseHelper.getErrorResponse(bindingResult, HttpStatus.BAD_REQUEST);
-        CUserDetailsAndTokenDTO dto = authService.login(loginDTO, response);
+        TokenDTO dto = authService.login(loginDTO, response);
         if(dto == null)
             return ResponseHelper.getErrorResponse("Invalid username or password!", HttpStatus.UNAUTHORIZED);
 

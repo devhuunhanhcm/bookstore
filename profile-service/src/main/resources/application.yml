@@ -1,0 +1,12 @@
+server:
+    port: 8081
+spring:
+    profiles:
+        active: dev
+    application:
+        name: profile-service
+    neo4j:
+      uri: ${NEO4J_URI}
+      authentication:
+          username: ${NEO4J_USERNAME}
+          password: ${NEO4J_PASSWORD}
