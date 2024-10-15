@@ -8,7 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for indentity-oauth2" enabled="true">
+      <profile name="Annotation profile for identity-oauth2" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -18,14 +18,16 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.4.2.Final/mapstruct-processor-1.4.2.Final.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.4.2.Final/mapstruct-1.4.2.Final.jar" />
         </processorPath>
-        <module name="indentity-oauth2" />
+        <module name="api-gateway" />
         <module name="profile-service" />
+        <module name="identity-oauth2" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="indentity-oauth2" options="-parameters" />
+      <module name="api-gateway" options="-parameters" />
+      <module name="identity-oauth2" options="-parameters" />
       <module name="profile-service" options="-parameters" />
     </option>
   </component>

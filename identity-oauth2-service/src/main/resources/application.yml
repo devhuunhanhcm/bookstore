@@ -1,5 +1,7 @@
+server:
+  port: ${SERVER_PORT}
 api:
-  prefix: /api/v1
+  prefix: /identity
   service:
     profile: ${PROFILE_SERVICE}
 app:
@@ -7,8 +9,6 @@ app:
     secretKey: B1PtOxdWYsCuZ7fon6wMuUWwsGtLouYyUl4LVScBNiKSKWIHt+fSWKq9sxEPc8ts+8ey1o/qdy5oMs1qYgq0hQ==
   allowed:
     origins: ${ALLOWED_ORIGINS}
-server:
-  port: ${SERVER_PORT}
 spring:
   profiles:
     active: dev
