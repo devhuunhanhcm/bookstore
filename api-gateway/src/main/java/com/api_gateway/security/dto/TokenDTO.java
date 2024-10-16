@@ -1,4 +1,4 @@
-package com.indentity_oauth2.user.dto;
+package com.api_gateway.security.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

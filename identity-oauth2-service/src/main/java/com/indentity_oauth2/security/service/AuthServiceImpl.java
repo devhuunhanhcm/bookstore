@@ -89,7 +89,7 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        return TokenDTO.builder().token(token).build();
+        return TokenDTO.builder().token(token).isValid(true).build();
     }
 
     @Override
