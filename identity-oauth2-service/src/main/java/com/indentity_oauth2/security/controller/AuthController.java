@@ -72,4 +72,12 @@ public class AuthController {
 
         return ResponseHelper.getResponse("Logout successfully!!",HttpStatus.OK);
     }
+
+    @PostMapping("/verify-token")
+    public Object verifyToken(@RequestBody TokenDTO tokenDTO){
+        TokenDTO resultDTO = authService.verifyToken(tokenDTO);
+        if(!resultDTO.isValid())
+            return ResponseHelper.getResponse(resultDTO, HttpStatus.UNAUTHORIZED);
+        return ResponseHelper.getResponse(resultDTO,HttpStatus.OK);
+    }
 }

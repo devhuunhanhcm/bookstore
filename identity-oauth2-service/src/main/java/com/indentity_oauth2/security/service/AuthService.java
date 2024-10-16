@@ -9,4 +9,6 @@ public interface AuthService {
     TokenDTO login(LoginDTO dto, HttpServletResponse response);
     void register(RegisterDTO dto);
     void logout(String refreshToken);
+
+    TokenDTO verifyToken(TokenDTO tokenDTO);
 }

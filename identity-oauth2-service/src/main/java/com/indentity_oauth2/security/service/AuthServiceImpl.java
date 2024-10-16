@@ -129,4 +129,9 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Something wrong please try again");
         }
     }
+
+    @Override
+    public TokenDTO verifyToken(TokenDTO tokenDTO) {
+        return TokenDTO.builder().token(tokenDTO.getToken()).isValid(jwtHelper.validationJwt(tokenDTO.getToken())).build();
+    }
 }

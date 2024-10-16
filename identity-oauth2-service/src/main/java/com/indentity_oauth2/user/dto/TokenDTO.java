@@ -11,4 +11,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class TokenDTO {
     private String token;
+    private boolean isValid;
 }
