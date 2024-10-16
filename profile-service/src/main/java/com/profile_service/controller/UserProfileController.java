@@ -10,11 +10,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("${app.api-prefix}")
 public class UserProfileController {
     private final UserProfileService userProfileService;
+
+    @GetMapping("/get-all")
+    public Object getAll(){
+        List<UserProfileDTO> userProfileDTOList =  userProfileService.getAllUser();
+        return ResponseHelper.getResponse(userProfileDTOList,HttpStatus.OK);
+    }
 
     @PostMapping
     public Object createProfile(@Valid @RequestBody UserProfileDTO dto, BindingResult bindingResult) {

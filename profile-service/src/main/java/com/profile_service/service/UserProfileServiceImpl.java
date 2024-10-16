@@ -8,7 +8,9 @@ import com.profile_service.repository.UserProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -60,5 +62,13 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfileRepository.save(userProfileUpdated);
 
         return UserProfileMapper.INSTANCE.toDto(userProfileUpdated);
+    }
+
+    @Override
+    public List<UserProfileDTO> getAllUser() {
+        return userProfileRepository.findAll()
+                                    .stream()
+                                    .map(userProfile -> UserProfileMapper.INSTANCE.toDto(userProfile))
+                                    .collect(Collectors.toList());
     }
 }

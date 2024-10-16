@@ -1,5 +1,6 @@
 package com.indentity_oauth2.security.controller;
 
+import com.indentity_oauth2.common.helper.ApiResponse;
 import com.indentity_oauth2.common.helper.ResponseHelper;
 import com.indentity_oauth2.security.dto.LoginDTO;
 import com.indentity_oauth2.security.dto.RegisterDTO;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,5 +73,11 @@ public class AuthController {
         authService.logout(refreshToken);
 
         return ResponseHelper.getResponse("Logout successfully!!",HttpStatus.OK);
+    }
+
+    @PostMapping("/verify-token")
+    public ResponseEntity<TokenDTO> verifyToken(@RequestBody TokenDTO tokenDTO){
+        TokenDTO resultDTO = authService.verifyToken(tokenDTO);
+        return new ResponseEntity<>(resultDTO,HttpStatus.OK);
     }
 }

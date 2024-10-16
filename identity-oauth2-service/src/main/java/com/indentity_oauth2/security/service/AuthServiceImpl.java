@@ -89,7 +89,7 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        return TokenDTO.builder().token(token).build();
+        return TokenDTO.builder().token(token).isValid(true).build();
     }
 
     @Override
@@ -128,5 +128,10 @@ public class AuthServiceImpl implements AuthService {
         }catch(Exception e){
             throw new RuntimeException("Something wrong please try again");
         }
+    }
+
+    @Override
+    public TokenDTO verifyToken(TokenDTO tokenDTO) {
+        return TokenDTO.builder().token(tokenDTO.getToken()).isValid(jwtHelper.validationJwt(tokenDTO.getToken())).build();
     }
 }
