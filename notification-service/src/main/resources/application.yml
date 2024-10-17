@@ -1,0 +1,16 @@
+server:
+    port: 8082
+app:
+    brevo-mail:
+        url: https://api.brevo.com
+    api-prefix: /notification
+    jwt:
+        secretKey: B1PtOxdWYsCuZ7fon6wMuUWwsGtLouYyUl4LVScBNiKSKWIHt+fSWKq9sxEPc8ts+8ey1o/qdy5oMs1qYgq0hQ==
+
+spring:
+    application:
+        name: notification-service
+    data:
+        mongodb:
+            uri: mongodb://root:12345678@localhost:27017/admin
+            database: admin

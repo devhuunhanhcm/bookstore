@@ -3,6 +3,7 @@ server:
 app:
   profile-service-url: http://localhost:8081
   identity-service-url: http://localhost:8080
+  notification-service-url: http://localhost:8082
   api-prefix: /api/v1
   prefix-strip: 2
 
@@ -23,6 +24,13 @@ spring:
                   uri: ${app.profile-service-url}
                   predicates:
                     - Path=${app.api-prefix}/profile/**
+                  filters:
+                    - StripPrefix= ${app.prefix-strip}
+
+                - id: notification-service
+                  uri: ${app.notification-service-url}
+                  predicates:
+                    - Path=${app.api-prefix}/notification/**
                   filters:
                     - StripPrefix= ${app.prefix-strip}
 
