@@ -2,6 +2,9 @@ server:
     port: 8081
 app:
   api-prefix: /profile
+  jwt:
+    secretKey: B1PtOxdWYsCuZ7fon6wMuUWwsGtLouYyUl4LVScBNiKSKWIHt+fSWKq9sxEPc8ts+8ey1o/qdy5oMs1qYgq0hQ==
+
 spring:
     profiles:
         active: dev
