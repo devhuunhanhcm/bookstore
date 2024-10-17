@@ -7,6 +7,7 @@ import com.profile_service.service.UserProfileService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class UserProfileController {
     private final UserProfileService userProfileService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get-all")
     public Object getAll(){
         List<UserProfileDTO> userProfileDTOList =  userProfileService.getAllUser();
