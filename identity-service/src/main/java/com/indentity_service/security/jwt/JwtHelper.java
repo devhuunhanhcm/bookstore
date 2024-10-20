@@ -2,11 +2,14 @@ package com.indentity_service.security.jwt;
 
 
 import com.indentity_service.security.dto.UsernameAndRolesDTO;
+import com.indentity_service.security.model.BlackToken;
+import com.indentity_service.security.repository.BlackTokenRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,12 +19,16 @@ import javax.crypto.SecretKey;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 public class JwtHelper {
     private static final String PREFIX = "Bearer ";
     private static final long EXPIRE_DURATION = 1 * 60 * 60 * 1000;
+
+    @Autowired
+    private BlackTokenRepository blackTokenRepository;
 
     @Value("${app.jwt.secretKey}")
     private String strKeys;
@@ -58,6 +65,11 @@ public class JwtHelper {
     public Boolean validationJwt(String token) {
         if (token == null)
             return false;
+        Optional<BlackToken> blackToken = blackTokenRepository.findByToken(token);
+
+        if(blackToken.isPresent())
+            return false;
+
         try {
             Jwts.parser()
                     .verifyWith(getSecretKey())

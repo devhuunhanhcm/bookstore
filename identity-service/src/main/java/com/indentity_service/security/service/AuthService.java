@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public interface AuthService {
     TokenDTO login(LoginDTO dto, HttpServletResponse response);
     void register(RegisterDTO dto);
-    void logout(String refreshToken);
+    void logout(String refreshToken,String token);
 
     TokenDTO verifyToken(TokenDTO tokenDTO);
 }

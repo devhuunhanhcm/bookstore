@@ -6,7 +6,9 @@ import com.indentity_service.role.repository.CRoleRepository;
 import com.indentity_service.security.dto.LoginDTO;
 import com.indentity_service.security.dto.RegisterDTO;
 import com.indentity_service.security.jwt.JwtHelper;
+import com.indentity_service.security.model.BlackToken;
 import com.indentity_service.security.model.RefreshToken;
+import com.indentity_service.security.repository.BlackTokenRepository;
 import com.indentity_service.security.repository.RefreshTokenRepository;
 import com.indentity_service.user.dto.TokenDTO;
 import com.indentity_service.user.dto.UserProfileDTO;
@@ -17,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,6 +44,9 @@ public class AuthServiceImpl implements AuthService {
     private RefreshTokenRepository refreshTokenRepository;
 
     @Autowired
+    private BlackTokenRepository blackTokenRepository;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -51,6 +57,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserProfileFeignClient  userProfileFeignClient;
+
+    @Autowired
+    private KafkaTemplate<String,String> kafkaTemplate;
 
     @Override
     public TokenDTO login(LoginDTO dto, HttpServletResponse response) {
@@ -112,14 +121,20 @@ public class AuthServiceImpl implements AuthService {
             userProfileDTO.setUserId(user.getId());
             userProfileFeignClient.createProfile(userProfileDTO);
 
+//            send message to notification with kafka
+            kafkaTemplate.send("onboard-success","Welcome new user: " + dto.getUsername());
+
         } catch (Exception e) {
             throw new RuntimeException("Something wrong please try again");
         }
     }
 
     @Override
-    public void logout(String refreshToken) {
+    public void logout(String refreshToken,String token) {
+        blackTokenRepository.save(BlackToken.builder().token(token).build());
+
         Optional<RefreshToken> refreshTokenOpt = refreshTokenRepository.findByRefreshToken(refreshToken);
+
         if(refreshTokenOpt.isEmpty())
             return;
         try{

@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,13 +64,18 @@ public class AuthController {
                          HttpServletResponse response,
                          HttpServletRequest request){
         String refreshToken = refreshTokenCookie;
+        String token = "";
+        String authHeader = request.getHeader("Authorization");
+        if(StringUtils.hasText(authHeader))
+            token = authHeader.replace("Bearer ", "");
+        else
+            return ResponseHelper.getErrorResponse("Invalid token!", HttpStatus.UNAUTHORIZED);
 
+        authService.logout(refreshToken,token);
         Cookie cookie = new Cookie("refreshToken",null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);
-
-        authService.logout(refreshToken);
 
         return ResponseHelper.getResponse("Logout successfully!!",HttpStatus.OK);
     }
