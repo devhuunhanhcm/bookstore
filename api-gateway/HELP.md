@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.api-gateway' is invalid and this project uses 'com.api_gateway' instead.
+* The original package name 'com.api-gateway' is invalid and this project uses 'com.devhuunhan' instead.
 
 # Getting Started
 

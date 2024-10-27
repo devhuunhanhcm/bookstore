@@ -1,12 +1,10 @@
 services:
   kafka:
-    image: docker.io/bitnami/kafka:3.8
+    image: bitnami/kafka:3.7.0
     container_name: kafka
     hostname: kafka
     ports:
       - "9094:9094"
-    volumes:
-      - "kafka_data:/bitnami"
     environment:
       - KAFKA_CFG_NODE_ID=0
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
@@ -15,8 +13,3 @@ services:
       - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://localhost:9094
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
-volumes:
-  kafka_data:
-    driver: local
-
-
