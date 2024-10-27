@@ -1,6 +1,5 @@
 package com.devhuunhan.security.jwt;
 
-import com.devhuunhan.security.dto.jwtClaimsDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
-public class JwtAuthenrizationFilter extends OncePerRequestFilter {
+public class JwtDecodeFilter extends OncePerRequestFilter {
     @Autowired
     private JwtHelper helper;
 
@@ -24,16 +23,13 @@ public class JwtAuthenrizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, IOException {
         String token = helper.getToken(request);
         try{
-            if(helper.validationJwt(token)){
-                jwtClaimsDTO currentUser = helper.getClaims(token);
-                Authentication auth = new UsernamePasswordAuthenticationToken(currentUser.getUsername(),"",currentUser.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            }
+            JwtClaimsDTO currentUser = helper.getClaims(token);
+            Authentication auth = new UsernamePasswordAuthenticationToken(currentUser.getUsername(),"",currentUser.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
         }catch (Exception ex){
             response.setHeader("Error",ex.getMessage());
             response.setStatus(HttpStatus.FORBIDDEN.value());
         }
-
         filterChain.doFilter(request, response);
     }
 }

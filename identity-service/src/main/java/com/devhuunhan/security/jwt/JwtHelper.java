@@ -1,7 +1,7 @@
 package com.devhuunhan.security.jwt;
 
 
-import com.devhuunhan.security.dto.UsernameAndRolesDTO;
+import com.devhuunhan.security.dto.jwtClaimsDTO;
 import com.devhuunhan.security.model.BlackToken;
 import com.devhuunhan.security.repository.BlackTokenRepository;
 import io.jsonwebtoken.*;
@@ -91,7 +91,7 @@ public class JwtHelper {
         return false;
     }
 
-    public UsernameAndRolesDTO getUsernameAndRoleFromToken(String token) {
+    public jwtClaimsDTO getClaims(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(getSecretKey())
                 .build()
@@ -101,7 +101,7 @@ public class JwtHelper {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        return UsernameAndRolesDTO.builder().username(claims.getSubject()).authorities(authorities).build();
+        return jwtClaimsDTO.builder().username(claims.getSubject()).authorities(authorities).build();
     }
 
     public String getToken(HttpServletRequest request) {

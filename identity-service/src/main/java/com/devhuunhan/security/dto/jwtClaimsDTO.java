@@ -13,7 +13,7 @@ import java.util.Collection;
 @Getter
 @NoArgsConstructor
 @SuperBuilder
-public class UsernameAndRolesDTO {
+public class jwtClaimsDTO {
     private String username;
     private Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 }
